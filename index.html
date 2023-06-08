@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>spacepowerfan.com Filter</title>
+      <style type="text/css">
+                 /* General styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui;
+  margin: 0;
+  padding: 0;
+  background-color: #f7f7f7;
+  padding-top: 50px;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+button {
+  background-color: #3368ff;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 100%;
+  display: none;
+  padding-top: 80px;
+}
+
+.popup-content {
+  background-color: white;
+  margin: auto;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 500px;
+  max-height: 80%;
+  overflow-y: auto;
+  text-align: center;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 768px) { /* Apply styles for screens larger than 768px */
+  input[type="text"] {
+    width: 70%;
+    margin-right: 15px;
+    margin-bottom: 0;
+  }
+
+  label {
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 0;
+  }
+
+  button {
+    margin-bottom: 0;
+  }
+} 
+
+/* Style the top arrow button */
+.top-arrow button {
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  color: #fff; /* white */
+  background-color: #f7f7f7; /*white*/
+  border: none;
+  border-radius: 50%;
+  padding: 12px;
+  font-size: 24px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.top-arrow button:hover {
+  background-color: #0069d9; /* darker blue */
+}
+
+    </style>
+</head>
+<body>
+  <div style="text-align: center;">
+  <h1>spacepowerfan.com/d.gateanime.com/.../{Filter server}</h1>
+  <label for="source">Enter View Page Source HTML code:</label><br>
+  <textarea id="source" rows="3" cols="150" placeholder="<!DOCTYPE html>"></textarea><br>
+  <button onclick="filterTRID()">Filter Server Code</button><br><br>
+  <label for="result">Server Code:</label>
+  <label for="trtype">TR Type:</label>
+  <textarea id="trtype" rows="1" cols="1" readonly></textarea><br>
+  <textarea id="result" rows="1" cols="150" placeholder="****"></textarea><br>
+  <button onclick="copyResult()">Copy</button><br><br>
+
+  
+  
+  <label for="numbers">Enter a string of numbers:</label><br>
+    <textarea id="numbers" rows="1" cols="150" placeholder="****"></textarea><br>
+    <button onclick="generateUrl()">Generate</button><br><br>
+
+    <p>spacepowerfan.com</p>
+    <textarea id="urll" readonly rows="1" cols="150" placeholder="https://spacepowerfan.com/.../&trtype=1"></textarea><br>
+    <button onclick="copyUrll()">Copy</button><br><br>
+    <textarea id="url" readonly rows="1" cols="150"  placeholder="https://spacepowerfan.com/.../&trtype=2"></textarea><br>
+    <button onclick="copyUrl()">Copy</button><br><br>
+    <p>d.gateanime.com</p>
+    <textarea id="urlll" readonly rows="1" cols="150"  placeholder="https://d.gateanime.com/.../&trtype=1"></textarea><br>
+    <button onclick="copyUrlll()">Copy</button><br><br>
+    <textarea id="urllll" readonly rows="1" cols="150"  placeholder="https://d.gateanime.com/.../&trtype=2"></textarea><br>
+    <button onclick="copyUrllll()">Copy</button><br><br>
+
+
+    <label for="url-input">Generate ${view-source}:</label><br>
+    <textarea id="url-input" rows="1" cols="150"  placeholder="https://spacepowerfan.com/.../&trtype=*"></textarea>
+    <br><br>
+    <button onclick="generateTextAreas()">Generate Textareas</button>
+    <br><br>
+    <div id="textareas-container"></div>
+
+
+
+
+       <h1>iFrame Source Filter ["src="]</h1>
+
+    <textarea id="input" rows="3" cols="150" placeholder="<!DOCTYPE html>"></textarea><br>
+
+    <button onclick="filterIframes()">Filter iFrames</button><br><br>
+
+    <textarea id="output" rows="1" cols="150"  placeholder="https://....com/videos/.../.mp4"></textarea><br>
+    <button onclick="copySrcUrl()">Copy</button>
+    <button onclick="reset()">Reset</button><br><br>
+    <div class="top-arrow">
+    <button onclick="topFunction()" style="position: fixed; bottom: 20px; right: 30px;">⬆️</button><br>
+    </div>
+    </div>
+
+       <script>
+      function generateUrl() {
+        // Get the input value from the first textarea
+        const numbers = document.getElementById("numbers").value;
+
+        // Construct the URL with the numbers in between the hash tag
+        const url = `https://spacepowerfan.com/?trembed=0&trid=${numbers}&trtype=2`;
+
+        // Update the second textarea with the generated URL
+        document.getElementById("url").value = url;
+      
+        // Construct the URL with the numbers in between the hash tag
+        const urll = `https://spacepowerfan.com/?trembed=0&trid=${numbers}&trtype=1`;
+
+        // Update the second textarea with the generated URL
+        document.getElementById("urll").value = urll;
+
+        // Construct the URL with the numbers in between the hash tag
+        const urlll = `https://d.gateanime.com/?trembed=0&trid=${numbers}&trtype=1`;
+
+        // Update the second textarea with the generated URL
+        document.getElementById("urlll").value = urlll;
+
+        // Construct the URL with the numbers in between the hash tag
+        const urllll = `https://d.gateanime.com/?trembed=0&trid=${numbers}&trtype=2`;
+
+        // Update the second textarea with the generated URL
+        document.getElementById("urllll").value = urllll;
+
+      }
+
+      function copyUrll() {
+        // Copy the modified output from the urll textarea to the clipboard
+        var modifiedTextarea = document.getElementById("urll");
+        modifiedTextarea.select();
+        document.execCommand("copy");
+      }
+
+      function copyUrl() {
+        // Copy the modified output from the url textarea to the clipboard
+        var modifiedTextarea = document.getElementById("url");
+        modifiedTextarea.select();
+        document.execCommand("copy");
+      }
+
+      function copyUrlll() {
+        // Copy the modified output from the urll textarea to the clipboard
+        var modifiedTextarea = document.getElementById("urlll");
+        modifiedTextarea.select();
+        document.execCommand("copy");
+      }
+
+       function copyUrllll() {
+        // Copy the modified output from the urll textarea to the clipboard
+        var modifiedTextarea = document.getElementById("urllll");
+        modifiedTextarea.select();
+        document.execCommand("copy");
+      }
+    </script>
+
+
+
+
+
+
+  
+
+
+
+-------------
+<script>
+    function filterTRID() {
+      const source = document.getElementById('source').value;
+      const regexTRID = /trid=(\d+)/g;
+      const regexTRType = /trtype=(\w+)/g;
+
+      let matchTRID = regexTRID.exec(source);
+      let matchTRType = regexTRType.exec(source);
+
+      if (matchTRID !== null) {
+        document.getElementById('result').value = matchTRID[1];
+      } else {
+        document.getElementById('result').value = '';
+      }
+
+      if (matchTRType !== null) {
+        document.getElementById('trtype').value = matchTRType[1];
+      } else {
+        document.getElementById('trtype').value = '';
+      }
+    }
+
+         function copyResult() {
+        // Copy the modified output from the result textarea to the clipboard
+        var modifiedTextarea = document.getElementById("result");
+        modifiedTextarea.select();
+        document.execCommand("copy");
+      }
+  </script>
+
+  --------
+
+  
+
+    <script>
+        function filterIframes() {
+            var input = document.getElementById("input").value;
+            var output = document.getElementById("output");
+            var iframeSrcRegex = /<iframe.*?src=['"](.*?)['"]/i;
+            var match = input.match(iframeSrcRegex);
+
+            if (match) {
+                output.value = match[1];
+            } else {
+                output.value = "No iFrame found in the input";
+            }
+        }
+
+         function copySrcUrl() {
+        // Copy the modified output from the output textarea to the clipboard
+        var modifiedTextarea = document.getElementById("output");
+        modifiedTextarea.select();
+        document.execCommand("copy");
+      }
+    </script>
+
+
+    <script>
+    function generateTextAreas() {
+      const url = document.getElementById('url-input').value.trim();
+      if (!url) {
+        alert('Please enter a valid URL');
+        return;
+      }
+
+      const container = document.getElementById('textareas-container');
+      container.innerHTML = '';
+
+      for (let i = 0; i < 21; i++) {
+        const sourceUrl = url.replace(/trembed=\d+/, `trembed=${i}`);
+        const textarea = document.createElement('textarea');
+        textarea.value = `view-source:${sourceUrl}`;
+
+        // Create a copy button
+        const copyButton = document.createElement('button');
+        copyButton.textContent = `Copy:${i}`;
+        copyButton.addEventListener('click', () => {
+          textarea.select();
+          document.execCommand('copy');
+          alert('Copied to clipboard!');
+        });
+
+        // Add the textarea and copy button to the container
+        container.appendChild(textarea);
+        container.appendChild(copyButton);
+        container.appendChild(document.createElement('br'));
+      }
+    }
+
+    function reset() {
+      document.getElementById("input").value = "";
+      document.getElementById("output").value = "";
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+      function topFunction() {
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+      }
+  </script>
+
+</body>
+</html>
